@@ -71,6 +71,37 @@
     };
 };
 
+
+// From Pete: https://discord.com/channels/719497620560543766/845285481888743434/1206181117296644106
+&pro_micro_i2c {
+    status = "okay";
+    glidepoint: glidepoint@2a {
+        compatible = "cirque,pinnacle";
+        reg = <0x2a>;
+        status = "okay";
+        // This is for my personal build, where I hand wired the DR pin on the cirque to the ffkb v2 led pin (P0.06)
+        dr-gpios = <&gpio0 6 (GPIO_ACTIVE_HIGH)>;
+
+        sensitivity = "4x";
+        sleep;
+        no-taps;
+    };
+};
+
+/ {
+    // Rotation config, from Pete
+    // This will change in the future
+    // https://discord.com/channels/719497620560543766/845285481888743434/1206407883777114182
+    input_config {
+        compatible = "zmk,input-listener";
+        device = <&glidepoint>;
+
+        xy-swap;
+        y-invert;
+        x-invert;
+    };
+};
+
 // for logging, remove later
 &usbd {
     status = "okay";
